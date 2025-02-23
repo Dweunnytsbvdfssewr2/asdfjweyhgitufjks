@@ -1019,7 +1019,7 @@ do -- menu elements
     
             outline_background.Name = "Background"
             outline_background.AnchorPoint = Vector2.new(0.5, 0.5)
-            outline_background.BackgroundColor3 = library.menu_colors.background
+            outline_background.BackgroundColor3 = Color3.fromRGB(14, 14, 14)
             outline_background.BackgroundTransparency = 0
             outline_background.Position = UDim2.new(0.5, 0, 0.5, 0)
             outline_background.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -1106,7 +1106,7 @@ do -- menu elements
             holder = page_inline,
             base = background,
         };
-    
+
         library:connection(background.InputBegan, function(input)
             if input.UserInputType == Enum.UserInputType.MouseButton1 then
                 window.dragging[1], window.dragging[2] = true, environment.user_input_service:GetMouseLocation()
@@ -3503,6 +3503,134 @@ do -- menu elements
             end
         end)    
     end
+
+
+    -- local flags, pointers = library.flags, library.Pointers; getfenv(0)["Library"], getfenv(0)["Flags"], getfenv(0)["Pointers"] = library, flags, pointers;
+    -- local menu = library:window({name = 'medusa', position = "left"});
+    -- local watermark = library:watermark({ Name = 'medusa | build: beta | fps: 0' });
+    
+    -- -- tabs
+    -- local tabs = {
+    --     ["combat"] = menu:page({name = "combat"}),
+    --     ["visuals"] = menu:page({name = "visuals"}),
+    --     ["misc"] = menu:page({name = "miscellaneous"}),
+    --     ["settings"] = menu:page({name = "settings"})
+    -- };
+    -- --
+    -- local games = setmetatable({
+    --     -- none
+    -- }, {__index = function() 
+    --     return "Universal";
+    -- end});
+    -- local game_name = games[game_id] or games.__index()
+    -- do -- tab section ->> settings
+    --     local menu_cfgs = tabs.settings:section({name = "configs", side = "left"});
+    --     local menu_settings = tabs.settings:section({name = "menu", side = "center"});
+    --     local menu_overlay = tabs.settings:section({name = "overlay", side = "right"});
+    --     local extra = tabs.settings:section({name = "extra", side = "right"});
+    
+    --     do -- configs
+    --         local ConfigList = menu_cfgs:ListBox({ Flag = "cfg_list", Options = {}, Open = true, ScrollingMax = 5 })
+    --         menu_cfgs:Textbox({ Flag = "cfg_name", Name = "config name" })
+    
+    --         local CurrentList = {}
+    --         local function cfg_list()
+    --             local List = {}
+    --             for _, file in ipairs(listfiles("medusa/Configs")) do 
+    --                 List[#List + 1] = file:match("medusa/Configs\\(.*)%.cfg")
+    --             end
+    --             if #List ~= #CurrentList or table.concat(List) ~= table.concat(CurrentList) then
+    --                 CurrentList = List
+    --                 ConfigList:Refresh(CurrentList)
+    --             end
+    --         end
+    
+    --         menu_cfgs:button({ Name = "create", Callback = function()
+    --             pcall(function()
+    --                 local configName = flags.cfg_name
+    --                 if configName ~= "" and not isfile("medusa/Configs/" .. configName .. ".cfg") then
+    --                     writefile("medusa/Configs/" .. configName .. ".cfg", library:GetConfig())
+    --                     library:notification("created config [".. configName .."].", 5, Color3.new(0, 1, 0))
+    --                     cfg_list()
+    --                 end
+    --             end)
+    --         end}):button({ Name = "save", Callback = function()
+    --             pcall(function()
+    --                 local selectedConfig = flags.cfg_list
+    --                 if selectedConfig then
+    --                     writefile("medusa/Configs/" .. selectedConfig .. ".cfg", library:GetConfig())
+    --                     library:notification("saved config [".. selectedConfig .."].", 5, Color3.new(0, 1, 0))
+    --                     cfg_list()
+    --                 end
+    --             end)
+    --         end})
+    
+    --         menu_cfgs:button({ Name = "load", Callback = function()
+    --             pcall(function()
+    --                 local selectedConfig = flags.cfg_list
+    --                 if selectedConfig then
+    --                     library:LoadConfig(readfile("medusa/Configs/" .. selectedConfig .. ".cfg"))
+    --                     library:notification("loaded config [".. selectedConfig .."].", 5, Color3.new(0, 1, 0))
+    --                     cfg_list()
+    --                 end
+    --             end)
+    --         end}):button({ Name = "delete", Callback = function()
+    --             pcall(function()
+    --                 local selectedConfig = flags.cfg_list
+    --                 if selectedConfig then
+    --                     delfile("medusa/Configs/" .. selectedConfig .. ".cfg")
+    --                     library:notification("deleted config [".. selectedConfig .."].", 5, Color3.new(1, 0, 0))
+    --                     cfg_list()
+    --                 end
+    --             end)
+    --         end})
+    
+    --         menu_cfgs:button({ Name = "refresh", Callback = cfg_list })
+    --         cfg_list()
+    --     end
+    
+    --     do -- menu settings
+    --         menu_settings:keybind({Name = "close menu", Flag = "MenuKey", UseKey = true, Default = library.ui_key, Ignore = true, Callback = function(state) library.ui_key = state end})
+    --         menu_settings:Colorpicker({ Name = "accent", Flag = "accent", Default = library.menu_colors.inline_accent, callback = function(state)
+    --             library.menu_colors.inline_accent, library.menu_colors.accent = state, state;
+    --             local properties = {
+    --                 Frame = "BackgroundColor3", TextButton = "BackgroundColor3", TextLabel = "BackgroundColor3", ImageLabel = "ImageColor3", TextBox = "TextColor3", UIStroke = "Color"
+    --             };
+    --             for _, obj in pairs(library.theme) do
+    --                 if obj.Name ~= "Background" then
+    --                     local prop = properties[obj.ClassName];
+    --                     if prop then 
+    --                         obj[prop] = state;
+    --                     end
+    --                 end
+    --             end
+    --         end})   
+    --         menu_settings:toggle({name = "show watermark", default = true, Flag = "watermark", callback = function(state) watermark:SetVisible(state) end})
+    --         menu_settings:toggle({name = "show keybinds", default = true, Flag = "keybinds", callback = function(state) library.keybind_list:SetVisible(state) end})
+    --     end
+        
+    --     do -- overlay
+    --         menu_overlay:toggle({name = "peformance mode", default = false, Flag = "peformance_mode" })
+    --         menu_overlay:slider({Name = "limit fps", Min = 60, Max = 360, Default = 240, Decimals = 1, Callback = function(state) setfpscap(state) end})
+    --     end
+    
+    --     do -- extra
+    --         extra:button({ Name = "unload", Callback = function()
+    --             library.screen_gui:Destroy()
+    --             library.noti_screen_gui:Destroy()
+    --             library.watermark_screen_gui:Destroy()
+    --             library.keybind_screen_gui:Destroy()
+    --         end})
+    
+    --         extra:button({ Name = "rejoin", Callback = function()
+    --             environment.TeleportService:Teleport(game.PlaceId, local_plr)       
+    --         end})
+    
+    --         extra:button({ Name = "copy connect", Callback = function()
+    
+    --         end})
+    --     end
+    -- end  
 
     return library
 end
