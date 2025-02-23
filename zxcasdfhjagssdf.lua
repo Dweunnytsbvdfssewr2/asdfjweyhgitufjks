@@ -3503,4 +3503,6 @@ do -- menu elements
             end
         end)    
     end
+
+    return library
 end
