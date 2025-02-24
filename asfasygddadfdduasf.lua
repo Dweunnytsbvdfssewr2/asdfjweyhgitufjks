@@ -271,7 +271,6 @@ do
 		Objects["liner"].Parent = Objects["notification"]
 
 		Objects["text"] = Instance.new("TextLabel")
-		Objects["text"].FontFace = nil
 		Objects["text"].TextColor3 = Color3.fromRGB(255, 255, 255)
 		Objects["text"].BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Objects["text"].Text = Text
@@ -449,7 +448,6 @@ do
         Objects["UIGradient"].Parent = Objects["watermark"]
 
         Objects["text"] = Instance.new("TextLabel")
-        Objects["text"].FontFace = nil
         Objects["text"].TextColor3 = Library.Text
         Objects["text"].BorderColor3 = Color3.fromRGB(0, 0, 0)
         Objects["text"].Text = Data.Name
@@ -563,7 +561,6 @@ do
 		});
 
 		Objects["value"] = Instance.new("TextLabel")
-		Objects["value"].FontFace = nil
 		Objects["value"].TextColor3 = Library.Text
 		Objects["value"].BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Objects["value"].Text = "Keybinds"
@@ -632,7 +629,6 @@ do
 			local NewKey = {};
 
 			SubObjects["newkey"] = Instance.new("TextLabel")
-			SubObjects["newkey"].FontFace = nil
 			SubObjects["newkey"].TextColor3 = Library.Accent
 			SubObjects["newkey"].BorderColor3 = Color3.fromRGB(0, 0, 0)
 			SubObjects["newkey"].Text = `[{Key}]: {Name}`
@@ -714,7 +710,6 @@ do
 		Library.NotificationHolder = Objects["notifholders"];
 
 		Objects["title"] = Instance.new("TextLabel")
-		Objects["title"].FontFace = nil;
 		Objects["title"].TextColor3 = Library.Text
 		Objects["title"].BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Objects["title"].Text = Window.Name;
@@ -892,7 +887,7 @@ do
 		local Objects = {};
 
 		Objects["inactive"] = Instance.new("TextButton")
-		Objects["inactive"].FontFace = nil
+	
 		Objects["inactive"].TextColor3 = Color3.fromRGB(255, 255, 255)
 		Objects["inactive"].BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Objects["inactive"].Text = ""
@@ -941,7 +936,7 @@ do
 		Objects["UIGradient1"].Parent = Objects["inactive"]
 
 		Objects["text"] = Instance.new("TextLabel")
-		Objects["text"].FontFace = nil
+		
 		Objects["text"].TextColor3 = Library.TextInactive
 		Objects["text"].BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Objects["text"].Text = Tab.Name
@@ -1096,7 +1091,7 @@ do
 		})
 
 		Objects["text"] = Instance.new("TextLabel")
-		Objects["text"].FontFace = nil
+
 		Objects["text"].TextColor3 = Library.Text;
 		Objects["text"].BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Objects["text"].Text = Section.Name
@@ -1197,7 +1192,7 @@ do
 		Objects["UIGradient"].Parent = Objects["indicator"]
 
 		Objects["text"] = Instance.new("TextLabel")
-		Objects["text"].FontFace = nil
+		
 		Objects["text"].TextColor3 = Library.Text
 		Objects["text"].BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Objects["text"].Text = Toggle.Name
@@ -1596,7 +1591,7 @@ do
 			local SubObjects = {};
 	
 			SubObjects["key"] = Instance.new("TextButton")
-			SubObjects["key"].FontFace = nil
+			
 			SubObjects["key"].TextColor3 = Library.Text
 			SubObjects["key"].BorderColor3 = Color3.fromRGB(0, 0, 0)
 			SubObjects["key"].Text = "[MB2]"
@@ -1806,7 +1801,8 @@ do
 		})
 
 		Objects["text"] = Instance.new("TextLabel")
-		Objects["text"].FontFace = nil
+	
+
 		Objects["text"].TextColor3 = Library.Text
 		Objects["text"].BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Objects["text"].Text = Button.Name
@@ -1862,7 +1858,7 @@ do
 			SubObjects["UIStroke1"].Parent = SubObjects["sub"]
 
 			SubObjects["text"] = Instance.new("TextLabel")
-			SubObjects["text"].FontFace = nil
+			
 			SubObjects["text"].TextColor3 = Library.Text
 			SubObjects["text"].BorderColor3 = Color3.fromRGB(0, 0, 0)
 			SubObjects["text"].Text = SubButton.Name
@@ -1962,7 +1958,7 @@ do
 		end;
 
 		Objects["text"] = Instance.new("TextLabel")
-		Objects["text"].FontFace = nil
+	
 		Objects["text"].TextColor3 = Library.Text
 		Objects["text"].BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Objects["text"].Text = Slider.Name
@@ -2032,7 +2028,7 @@ do
 		Objects["UIGradient2"].Parent = Objects["realslider"]
 
 		Objects["value"] = Instance.new("TextLabel")
-		Objects["value"].FontFace = nil;
+	
 		Objects["value"].TextColor3 = Library.Text;
 		Objects["value"].BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Objects["value"].Text = "65/100"
@@ -2153,7 +2149,7 @@ do
 		end;
 
 		Objects["text"] = Instance.new("TextLabel")
-		Objects["text"].FontFace = nil
+	
 		Objects["text"].TextColor3 = Library.Text
 		Objects["text"].BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Objects["text"].Text = Dropdown.Name
@@ -2204,7 +2200,7 @@ do
 		Objects["UIGradient1"].Parent = Objects["realdropdown"]
 
 		Objects["value"] = Instance.new("TextLabel")
-		Objects["value"].FontFace = nil
+	
 		Objects["value"].TextColor3 = Library.Text;
 		Objects["value"].BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Objects["value"].Text = "Penis"
@@ -2240,7 +2236,7 @@ do
 		Objects["open1"].Parent = Objects["realdropdown"]
 
 		Objects["open2"] = Instance.new("TextLabel")
-		Objects["open2"].FontFace = nil
+	
 		Objects["open2"].TextColor3 = Library.Text
 		Objects["open2"].BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Objects["open2"].Text = "+"
@@ -2370,7 +2366,7 @@ do
 			OptionInsts["option"].Parent = Objects["optionholder"]
 
 			OptionInsts["text"] = Instance.new("TextLabel")
-			OptionInsts["text"].FontFace = nil;
+			
 			OptionInsts["text"].TextColor3 = Library.Text
 			OptionInsts["text"].BorderColor3 = Color3.fromRGB(0, 0, 0)
 			OptionInsts["text"].Text = Name
@@ -2500,7 +2496,7 @@ do
 		end;
 
 		Objects["text"] = Instance.new("TextLabel")
-		Objects["text"].FontFace = nil
+	
 		Objects["text"].TextColor3 = Library.Text
 		Objects["text"].BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Objects["text"].Text = Keybind.Name
@@ -2522,7 +2518,7 @@ do
 		Objects["UIStroke"].Parent = Objects["text"]
 
 		Objects["key"] = Instance.new("TextButton")
-		Objects["key"].FontFace = nil
+	
 		Objects["key"].TextColor3 = Library.Text
 		Objects["key"].BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Objects["key"].Text = "[MB2]"
@@ -2722,7 +2718,7 @@ do
 		end;
 
 		Objects["text"] = Instance.new("TextLabel")
-		Objects["text"].FontFace = nil
+		
 		Objects["text"].TextColor3 = Library.Text
 		Objects["text"].BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Objects["text"].Text = Colorpicker.Name
@@ -3069,7 +3065,7 @@ do
 		Objects["textbox"].Parent = Textbox.Section.Objects.Main
 
 		Objects["text"] = Instance.new("TextLabel")
-		Objects["text"].FontFace = nil
+	
 		Objects["text"].TextColor3 = Library.Text
 		Objects["text"].BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Objects["text"].Text = Textbox.Name
@@ -3128,7 +3124,7 @@ do
 		Objects["realbox"].Size = UDim2.new(1, 0, 1, -1)
 		Objects["realbox"].BorderSizePixel = 0
 		Objects["realbox"].BackgroundTransparency = 1
-		Objects["realbox"].FontFace = nil
+	
 		Objects["realbox"].PlaceholderText = Textbox.Placeholder
 		Objects["realbox"].ClearTextOnFocus = false
 		Objects["realbox"].TextSize = 12
@@ -3217,7 +3213,7 @@ do
 		end;
 
 		Objects["text"] = Instance.new("TextLabel")
-		Objects["text"].FontFace = nil
+	
 		Objects["text"].TextColor3 = Library.Text
 		Objects["text"].BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Objects["text"].Text = Dropdown.Name
@@ -3268,7 +3264,7 @@ do
 		Objects["UIGradient1"].Parent = Objects["realdropdown"]
 
 		Objects["value"] = Instance.new("TextLabel")
-		Objects["value"].FontFace = nil
+	
 		Objects["value"].TextColor3 = Library.Text;
 		Objects["value"].BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Objects["value"].Text = "Penis"
@@ -3304,7 +3300,7 @@ do
 		Objects["open1"].Parent = Objects["realdropdown"]
 
 		Objects["open2"] = Instance.new("TextLabel")
-		Objects["open2"].FontFace = nil
+		
 		Objects["open2"].TextColor3 = Library.Text
 		Objects["open2"].BorderColor3 = Color3.fromRGB(0, 0, 0)
 		Objects["open2"].Text = "+"
@@ -3448,7 +3444,7 @@ do
 			OptionInsts["option"].Parent = Objects["optionholder"]
 
 			OptionInsts["text"] = Instance.new("TextLabel")
-			OptionInsts["text"].FontFace = nil;
+		
 			OptionInsts["text"].TextColor3 = Library.Text
 			OptionInsts["text"].BorderColor3 = Color3.fromRGB(0, 0, 0)
 			OptionInsts["text"].Text = Name
@@ -3667,7 +3663,7 @@ do
 			OptionInsts["option"].Parent = Objects["realbox"]
 
 			OptionInsts["text"] = Instance.new("TextLabel")
-			OptionInsts["text"].FontFace = nil;
+		
 			OptionInsts["text"].TextColor3 = Library.Text
 			OptionInsts["text"].BorderColor3 = Color3.fromRGB(0, 0, 0)
 			OptionInsts["text"].Text = Name
