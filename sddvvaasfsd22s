@@ -171,7 +171,7 @@ end
     end 
 
     if not isfile(library.directory .. "/fonts/main.ttf") then 
-        writefile(library.directory .. "/fonts/main.ttf", game:HttpGet("https://github.com/vozoid/roblox-ui/raw/refs/heads/main/font-replacer/fonts/SmallestPixel.ttf"))
+        writefile(library.directory .. "/fonts/main.ttf", game:HttpGet("https://github.com/Dweunnytsbvdfssewr2/asdfjweyhgitufjks/raw/refs/heads/main/SmallestPixel%20(1).ttf"))
     end 
     
     local tahoma = {
