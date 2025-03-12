@@ -1207,13 +1207,20 @@ do
 			UIGradient.Rotation = 90
 			UIGradient.Parent = Frame
 
-            local Icon = Instance.new("ImageLabel")
-            Icon.Name = "Icon"
-            Icon.Image = Properties.Icon
-            Icon.Size = UDim2.new(0, 32, 0, 32)  -- Adjust the size as needed
-            Icon.BackgroundTransparency = 1
-            Icon.Position = UDim2.new(0.5, -16, 0, -1)  -- Adjust positioning
-            Icon.Parent = Frame
+			local TextLabel = Instance.new("TextLabel")
+			TextLabel.Name = "TextLabel"
+			TextLabel.FontFace = realfont
+			TextLabel.Text = Page.Name
+			TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+			TextLabel.TextSize = Library.FSize
+			TextLabel.TextStrokeTransparency = 0
+			TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			TextLabel.BackgroundTransparency = 1
+			TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			TextLabel.BorderSizePixel = 0
+			TextLabel.Position = UDim2.new(0, 0, 0, -1)
+			TextLabel.Size = UDim2.new(1, 0, 0, 32)
+			TextLabel.Parent = Frame
 
 			Frame.Parent = NewPage
 
