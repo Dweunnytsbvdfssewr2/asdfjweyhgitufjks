@@ -4523,7 +4523,7 @@ library.font = Font.new(font_client.fonts.cache:Register_Font("menu", 400, "Regu
             return setmetatable(cfg, library)  
         end     
 
-        function library:keybind(properties)
+        function library:keybind(properties) 
             local cfg = {
                 flag = properties.flag or tostring(2^math.random(1,30)*3),
                 keybind_name = properties.keybind_name or nil, 
@@ -4758,112 +4758,88 @@ library.font = Font.new(font_client.fonts.cache:Register_Font("menu", 400, "Regu
             end 
 
             function cfg.set(input)
-                if type(input) == "boolean" then
-                    local __cached = input
-            
-                    if cfg.mode == "always" then
-                        __cached = true
-                    end
-            
-                    cfg.active = __cached
-                    flags[cfg.flag]["active"] = __cached
+                if type(input) == "boolean" then 
+                    local __cached = input 
+
+                    if cfg.mode == "always" then 
+                        __cached = true 
+                    end 
+
+                    cfg.active = __cached 
+                    flags[cfg.flag]["active"] = __cached 
                     cfg.callback(__cached)
-            
+
                     flags[cfg.flag] = {
-                        mode = cfg.mode,
+                        mode = cfg.mode, 
                         key = cfg.key,
                         active = cfg.active
                     }
-            
-                    -- Show the keybind when active
-                    if cfg.active then
-                        keybind.Text = "[" .. string.lower(cfg.key_name) .. "]"
-                    else
-                        keybind.Text = ""  -- Hide the keybind when inactive
-                    end
-            
-                elseif tostring(input):find("Enum") then
+                elseif tostring(input):find("Enum") then 
                     input = input.Name == "Escape" and "..." or input
-            
-                    cfg.key = input or "..."
-            
+
+                    cfg.key = input or "..."	
+
                     local _text = keys[cfg.key] or tostring(cfg.key):gsub("Enum.", "")
                     local _text2 = (tostring(_text):gsub("KeyCode.", ""):gsub("UserInputType.", "")) or "..."
                     cfg.key_name = _text2
-            
-                    flags[cfg.flag]["mode"] = cfg.mode
-                    flags[cfg.flag]["key"] = cfg.key
-            
-                    -- Update the keybind display based on the key
-                    if cfg.active then
-                        keybind.Text = "[" .. string.lower(_text2) .. "]"
-                    else
-                        keybind.Text = ""  -- Hide if not active
-                    end
-            
+
+                    flags[cfg.flag]["mode"] = cfg.mode 
+                    flags[cfg.flag]["key"] = cfg.key 
+
+                    keybind.Text = "[" .. string.lower(_text2) .. "]"
+
                     cfg.callback(cfg.active or false)
-            
+
                     flags[cfg.flag] = {
-                        mode = cfg.mode,
+                        mode = cfg.mode, 
                         key = cfg.key,
-                        active = cfg.active
+                        active = cfg.active 
                     }
-                elseif table.find({"toggle", "hold", "always"}, input) then
+                elseif table.find({"toggle", "hold", "always"}, input) then 
                     cfg.set_mode(input)
-            
-                    if input == "always" then
-                        cfg.active = true
-                    end
-            
+
+                    if input == "always" then 
+                        cfg.active = true 
+                    end 
+
                     cfg.callback(cfg.active or false)
-            
+
                     flags[cfg.flag] = {
-                        mode = cfg.mode,
+                        mode = cfg.mode ,
                         key = cfg.key,
                         active = cfg.active
                     }
-            
-                    -- Show the keybind text if it's active
-                    if cfg.active then
-                        keybind.Text = "[" .. string.lower(cfg.key_name) .. "]"
-                    else
-                        keybind.Text = ""  -- Hide when inactive
-                    end
-                elseif type(input) == "table" then
+                    
+                elseif type(input) == "table" then 
                     input.key = type(input.key) == "string" and input.key ~= "..." and library:convert_enum(input.key) or input.key
-            
+
                     input.key = input.key == Enum.KeyCode.Escape and "..." or input.key
                     cfg.key = input.key or "..."
                     
                     cfg.mode = input.mode or "toggle"
-            
+
                     if input.active then
                         cfg.active = input.active
                     end
-            
+
                     flags[cfg.flag] = {
                         mode = cfg.mode,
-                        key = cfg.key,
+                        key = cfg.key, 
                         active = cfg.active
                     }
-            
+
                     local text = tostring(cfg.key) ~= "Enums" and (keys[cfg.key] or tostring(cfg.key):gsub("Enum.", "")) or nil
                     local __text = text and (tostring(text):gsub("KeyCode.", ""):gsub("UserInputType.", ""))
-            
-                    -- Update the keybind display if it's active
-                    if cfg.active then
-                        keybind.Text = "[" .. string.lower(__text)  .. "]"
-                    else
-                        keybind.Text = ""  -- Hide when not active
-                    end
-                end
-            
-                if cfg.keybind_name then
-                    key.change_text(keybind.Text .. " " .. cfg.keybind_name .. " (" .. flags[cfg.flag].mode .. ")")
+
+                    keybind.Text = "[" .. string.lower(__text)  .. "]" or "..."
+                    cfg.key_name = __text
+                end 
+
+                if cfg.keybind_name then 
+                    key.change_text(keybind.Text ..  " " .. cfg.keybind_name .. " (" .. flags[cfg.flag].mode  .. ")")
                     key.set_visible(cfg.active)
-                end
+                end 
             end
-            
 
             local selected; 
 
