@@ -6,20 +6,16 @@ do -- checks
             makefolder("medusa");
         end;
         --
-        if (not isfolder("CONFIGS")) then
-            makefolder("CONFIGS");
+        if (not isfolder("configs")) then
+            makefolder("configs");
         end;
         --
-        if (not isfolder("medusa/MENU")) then
-            makefolder("medusa/MENU");
+        if (not isfolder("medusa/menu")) then
+            makefolder("medusa/menu");
         end;
         --
-        if (not isfolder("medusa/MENU/FONTS")) then
-            makefolder("medusa/MENU/FONTS");
-        end;
-        --
-        if (not isfolder("medusa/LOADER/IMAGES")) then
-            makefolder("medusa/LOADER/IMAGES");
+        if (not isfolder("medusa/menu/fonts")) then
+            makefolder("medusa/menu/fonts");
         end;
     end;
 end;
@@ -61,25 +57,25 @@ signals = framework.modules.signals
 -- fonts
 local create_font = loadstring(game:HttpGet("https://raw.githubusercontent.com/judghementday2/bypass/refs/heads/main/fonts.lua"))();
 local fonts = {
-    smallest_pixel = create_font:register("medusa/MENU/FONTS", {
+    smallest_pixel = create_font:register("medusa/menu/fonts", {
         name = "smallest pixel",
         weight = "regular",
         style = "normal",
         link = "https://raw.githubusercontent.com/judghementday2/bypass/refs/heads/main/smallest_pixel-7.ttf",
     }),
-    templeos = create_font:register("medusa/MENU/FONTS", {
+    templeos = create_font:register("medusa/menu/fonts", {
         name = "templeos",
         weight = "regular",
         style = "normal",
         link = "https://raw.githubusercontent.com/judghementday2/bypass/refs/heads/main/Templeos.ttf",
     }),
-    proggytiny = create_font:register("medusa/MENU/FONTS", {
+    proggytiny = create_font:register("medusa/menu/fonts", {
         name = "proggytiny",
         weight = "regular",
         style = "normal",
         link = "https://raw.githubusercontent.com/judghementday2/bypass/refs/heads/main/ProggyTiny.ttf",
     }),
-    medodica = create_font:register("medusa/MENU/FONTS", {
+    medodica = create_font:register("medusa/menu/fonts", {
         name = "medodica",
         weight = "regular",
         style = "normal",
@@ -212,6 +208,8 @@ UI.__index = UI;
 UI.pages.__index = UI.pages;
 UI.sections.__index = UI.sections;
 --
+local black_bg;
+local blur_effect;
 do -- other
     function UI.next_flag() -- flags
         UI.un_named_flags = UI.un_named_flags + 1;
@@ -349,6 +347,20 @@ do -- other
         end;
     end;
     --
+    blur_effect = cloneref(Instance.new("BlurEffect", lighting));
+    black_bg = Instance_manager.new("TextButton", {
+        Name = "bg_effect";
+        Text = "";
+        AutoButtonColor = false;
+        Size = udim2(9999, 0, 9999, 0);
+        BorderColor3 = UI.themes.outline;
+        Position = udim2(0, 0, 0, -100);
+        ZIndex = -9999;
+        BackgroundColor3 = color3_rgb(0, 0, 0);
+        Visible = UI.autoload;
+        BackgroundTransparency = 0.35;
+        Parent = cloneref(Instance.new("ScreenGui", gethui()));
+    });
 end
 --
 do -- menu
@@ -3012,6 +3024,8 @@ do -- open/close
             pcall(function()
                 UI.autoload = not UI.autoload
                 UI.menu_gui.Enabled = UI.autoload
+                black_bg.Visible = UI.autoload
+                blur_effect.Size = UI.autoload and 20 or 0
             end);
         end;
     end);
@@ -3019,15 +3033,15 @@ end;
 --
 local watermark = UI:watermark({ name = 'medusa' });
 
-function UI:Configs(tab)
+function UI:configs(tab)
     tab:textbox({ flag = "cfg_name", name = "Name" });
     local ConfigList = tab:listbox({ flag = "cfg_list", options = {}, scrollingmax = 5 });
     --
     local CurrentList = {};
     local function cfg_list()
         local List = {}
-        for _, file in ipairs(listfiles("CONFIGS")) do
-            List[#List + 1] = file:match("CONFIGS\\(.*)%.cfg");
+        for _, file in ipairs(listfiles("configs")) do
+            List[#List + 1] = file:match("configs\\(.*)%.cfg");
         end;
         if #List ~= #CurrentList or table.concat(List) ~= table.concat(CurrentList) then
             CurrentList = List;
@@ -3038,8 +3052,8 @@ function UI:Configs(tab)
     tab:button({ Name = "Create", Callback = function()
         pcall(function()
             local config_name = UI.flags["cfg_name"];
-            if config_name ~= "" and not isfile("CONFIGS/" .. config_name .. ".cfg") then
-                writefile("CONFIGS/" .. config_name .. ".cfg", UI:GetConfig());
+            if config_name ~= "" and not isfile("configs/" .. config_name .. ".cfg") then
+                writefile("configs/" .. config_name .. ".cfg", UI:GetConfig());
                 --library:notification("created config [".. config_name .."].", 5, color3_new(0, 1, 0))
                 cfg_list()
             end;
@@ -3050,7 +3064,7 @@ function UI:Configs(tab)
         pcall(function()
             local selected_config = UI.flags["cfg_list"];
             if selected_config then
-                writefile("CONFIGS/" .. selected_config .. ".cfg", UI:GetConfig());
+                writefile("configs/" .. selected_config .. ".cfg", UI:GetConfig());
                 --library:notification("saved config [".. selected_config .."].", 5, color3_new(0, 1, 0))
                 cfg_list()
             end;
@@ -3061,7 +3075,7 @@ function UI:Configs(tab)
         pcall(function()
             local selected_config = UI.flags["cfg_list"];
             if selected_config then
-                UI:LoadConfig(readfile("CONFIGS/" .. selected_config .. ".cfg"));
+                UI:LoadConfig(readfile("configs/" .. selected_config .. ".cfg"));
                 --library:notification("loaded config [".. selected_config .."].", 5, color3_new(0, 1, 0))
                 cfg_list()
             end;
@@ -3072,7 +3086,7 @@ function UI:Configs(tab)
         pcall(function()
             local selected_config = UI.flags["cfg_list"];
             if selected_config then
-                delfile("CONFIGS/" .. selected_config .. ".cfg");
+                delfile("configs/" .. selected_config .. ".cfg");
                 --library:notification("deleted config [".. selected_config .."].", 5, color3_new(1, 0, 0))
                 cfg_list()
             end;
@@ -3121,4 +3135,5 @@ function UI:Menu(tab)
     end});
 end;
 
-return {framework, fonts};
+
+return {UI, framework, fonts, black_bg, blur_effect};
