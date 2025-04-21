@@ -6,8 +6,8 @@ do -- checks
             makefolder("medusa");
         end;
         --
-        if (not isfolder("configs")) then
-            makefolder("configs");
+        if (not isfolder("medusa/configs")) then
+            makefolder("medusa/configs");
         end;
         --
         if (not isfolder("medusa/menu")) then
@@ -3028,8 +3028,8 @@ function UI:configs(tab)
     local CurrentList = {};
     local function cfg_list()
         local List = {}
-        for _, file in ipairs(listfiles("configs")) do
-            List[#List + 1] = file:match("configs\\(.*)%.cfg");
+        for _, file in ipairs(listfiles("medusa/configs")) do
+            List[#List + 1] = file:match("medusa/configs\\(.*)%.cfg");
         end;
         if #List ~= #CurrentList or table.concat(List) ~= table.concat(CurrentList) then
             CurrentList = List;
@@ -3040,8 +3040,8 @@ function UI:configs(tab)
     tab:button({ Name = "Create", Callback = function()
         pcall(function()
             local config_name = UI.flags["cfg_name"];
-            if config_name ~= "" and not isfile("configs/" .. config_name .. ".cfg") then
-                writefile("configs/" .. config_name .. ".cfg", UI:GetConfig());
+            if config_name ~= "" and not isfile("medusa/configs/" .. config_name .. ".cfg") then
+                writefile("medusa/configs/" .. config_name .. ".cfg", UI:GetConfig());
                 --library:notification("created config [".. config_name .."].", 5, color3_new(0, 1, 0))
                 cfg_list()
             end;
@@ -3052,7 +3052,7 @@ function UI:configs(tab)
         pcall(function()
             local selected_config = UI.flags["cfg_list"];
             if selected_config then
-                writefile("configs/" .. selected_config .. ".cfg", UI:GetConfig());
+                writefile("medusa/configs/" .. selected_config .. ".cfg", UI:GetConfig());
                 --library:notification("saved config [".. selected_config .."].", 5, color3_new(0, 1, 0))
                 cfg_list()
             end;
@@ -3063,7 +3063,7 @@ function UI:configs(tab)
         pcall(function()
             local selected_config = UI.flags["cfg_list"];
             if selected_config then
-                UI:LoadConfig(readfile("configs/" .. selected_config .. ".cfg"));
+                UI:LoadConfig(readfile("medusa/configs/" .. selected_config .. ".cfg"));
                 --library:notification("loaded config [".. selected_config .."].", 5, color3_new(0, 1, 0))
                 cfg_list()
             end;
@@ -3074,7 +3074,7 @@ function UI:configs(tab)
         pcall(function()
             local selected_config = UI.flags["cfg_list"];
             if selected_config then
-                delfile("configs/" .. selected_config .. ".cfg");
+                delfile("medusa/configs/" .. selected_config .. ".cfg");
                 --library:notification("deleted config [".. selected_config .."].", 5, color3_new(1, 0, 0))
                 cfg_list()
             end;
@@ -3103,7 +3103,7 @@ end;
 function UI:Menu(tab)
     tab:keybind({name = "Menu Keybind", description = "Open / Close", default = UI.ui_key, usekey = true, ignore = true, callback = function(state) UI.ui_key = state end});
     tab:toggle({name = "Watermark", description = "Shows Watermark", default = true, flag = "show watermark", callback = function(state) watermark:SetVisible(state); end});
-    tab:slider({name = "Horizontal", min = 0, max = 100, default = 50, decimals = 1, suffix = "px", flag = "watermark_x", callback = function(state) watermark:Position(state / 100, nil) end});
+    tab:slider({name = "Horizontal", min = 0, max = 100, default = 10, decimals = 1, suffix = "px", flag = "watermark_x", callback = function(state) watermark:Position(state / 100, nil) end});
     tab:slider({name = "Vertical", min = 0, max = 100, default = 5, decimals = 1, suffix = "px", flag = "watermark_y", callback = function(state) watermark:Position(nil, state / 100) end});
     tab:toggle({name = "Keybinds", description = "Shows Keybinds", default = true, flag = "show keybinds", callback = function(state) UI.keybind_list:SetVisible(state) end});
     tab:dropdown({name = "Menu Font", description = "Custom fonts for Menu", options = {"Proggy", "Templeos", "Pixel", "Rubik",}, default = "Rubik", flag = "Menu Fonts", callback = function(state)
