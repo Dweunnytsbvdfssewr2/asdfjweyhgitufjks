@@ -3084,7 +3084,7 @@ function UI:configs(tab)
 end;
 
 function UI:Themes(tab)
-    tab:dropdown({name = "Themes", description = "Custom themes for Menu", options = {"Default", "blue baby", "quantum", "off white", "the hub", "fatality", "gamesense"}, default = "Default", flag = "theme_list", callback = function(state)
+    tab:dropdown({name = "Themes", description = "Custom themes for Menu", options = {"Default", "blue", "quantum", "pornhub", "fatality", "gamesense"}, default = "Default", flag = "theme_list", callback = function(state)
         UI:LoadTheme(state);
     end}); 
 end;
