@@ -102,49 +102,41 @@ local UI = ({
             inactive = color3_rgb(69, 69, 70)
         },
         fatality = {
-            accent = color3_rgb(130, 0, 69),
+            accent = color3_rgb(200, 12, 90),
+            risky = color3_rgb(125, 0, 0),
+            background = color3_rgb(18, 15, 33),
+            outline = color3_rgb(31, 25, 62),
+            active = color3_rgb(225, 225, 225),
+            inactive = color3_rgb(69, 69, 70)
+        },
+        gamesense = {
+            accent = color3_rgb(159, 199, 57),
+            risky = color3_rgb(125, 0, 0),
+            background = color3_rgb(7, 7, 7),
+            outline = color3_rgb(23, 23, 23),
+            active = color3_rgb(225, 225, 225),
+            inactive = color3_rgb(69, 69, 70)
+        },
+        quantum = {
+            accent = color3_rgb(204, 6, 13),
+            risky = color3_rgb(125, 0, 0),
+            background = color3_rgb(10, 10, 10),
+            outline = color3_rgb(23, 23, 23),
+            active = color3_rgb(225, 225, 225),
+            inactive = color3_rgb(69, 69, 70)
+        },
+        blue = {
+            accent = color3_rgb(1, 161, 255),
             risky = color3_rgb(125, 0, 0),
             background = color3_rgb(7, 7, 8),
             outline = color3_rgb(15, 15, 16),
             active = color3_rgb(225, 225, 225),
             inactive = color3_rgb(69, 69, 70)
         },
-        gamesense = {
-            accent = color3_rgb(180, 228, 128),
+        pornhub = {
+            accent = color3_rgb(247, 151, 30),
             risky = color3_rgb(125, 0, 0),
-            background = color3_rgb(10, 10, 10),
-            outline = color3_rgb(20, 20, 20),
-            active = color3_rgb(225, 225, 225),
-            inactive = color3_rgb(80, 80, 80)
-        },
-        quantum = {
-            accent = color3_rgb(195, 0, 0),
-            risky = color3_rgb(125, 0, 0),
-            background = color3_rgb(10, 10, 10),
-            outline = color3_rgb(20, 20, 20),
-            active = color3_rgb(225, 225, 225),
-            inactive = color3_rgb(80, 80, 80)
-        },
-        ["blue baby"] = {
-            accent = color3_rgb(0, 255, 255),
-            risky = color3_rgb(125, 0, 0),
-            background = color3_rgb(10, 10, 10),
-            outline = color3_rgb(20, 20, 20),
-            active = color3_rgb(225, 225, 225),
-            inactive = color3_rgb(80, 80, 80)
-        },
-        ["the hub"] = {
-            accent = color3_rgb(255,163,26),
-            risky = color3_rgb(125, 0, 0),
-            background = color3_rgb(10, 10, 10),
-            outline = color3_rgb(20, 20, 20),
-            active = color3_rgb(225, 225, 225),
-            inactive = color3_rgb(80, 80, 80)
-        },
-        ["off white"] = {
-            accent = color3_rgb(205,205,205),
-            risky = color3_rgb(125, 0, 0),
-            background = color3_rgb(10, 10, 10),
+            background = color3_rgb(0,0,0),
             outline = color3_rgb(20, 20, 20),
             active = color3_rgb(225, 225, 225),
             inactive = color3_rgb(80, 80, 80)
