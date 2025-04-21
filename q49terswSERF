@@ -94,10 +94,10 @@ local UI = ({
     keybind_list = nil,
     themes = {
         Default = {
-            accent = color3_rgb(181, 179, 250),
+            accent = color3_rgb(189, 181, 241),
             risky = color3_rgb(125, 0, 0),
             background = color3_rgb(7, 7, 8),
-            outline = color3_rgb(15, 15, 16),
+            outline = color3_rgb(25, 25, 26),
             active = color3_rgb(225, 225, 225),
             inactive = color3_rgb(69, 69, 70)
         },
@@ -890,7 +890,7 @@ do -- menu
             --
             local menu = Instance_manager.new("ScreenGui", {
                 Name = "medusa menu";
-                Parent = game.CoreGui;
+                Parent = gethui();
                 IgnoreGuiInset = Enum.ScreenInsets.DeviceSafeInsets;
                 ZIndexBehavior = Enum.ZIndexBehavior.Sibling;
             });
@@ -940,8 +940,8 @@ do -- menu
                 BackgroundTransparency = 1;
                 BorderColor3 = color3_rgb(0, 0, 0);
                 BorderSizePixel = 0;
-                Size = udim2(0, 60, 0, 63);
-                Position = udim2(0.100000001, -64, 0, 15);
+                Size = udim2(0, 50, 0, 53);
+                Position = udim2(0.100000001, -61, 0, 18);
                 Image = window.icon;
                 Parent = background;
             });
@@ -965,7 +965,7 @@ do -- menu
                 BorderColor3 = color3_rgb(255, 255, 255);
                 BorderSizePixel = 0;
                 Position = udim2(0.127, 0, 0, 13);
-                Size = udim2(0, 640, 0, 470);
+                Size = udim2(0, 640, 0, 570);
                 Parent = background;
             });
             --
@@ -1164,7 +1164,7 @@ do -- menu
                 Image = page.icon;
                 BackgroundTransparency = 1;
                 BorderSizePixel = 0;
-                Position = udim2(0.5, -properties.size.X.Offset / 2, 0.5, -properties.size.Y.Offset / 2);
+                Position = udim2(0.5, -properties.size.X.Offset / 2, 0.5, -properties.size.Y.Offset / 2 - 5);
                 Size = properties.size;
                 Parent = tab_button;
             });
@@ -1178,7 +1178,7 @@ do -- menu
                 BackgroundTransparency = 1;
                 TextStrokeTransparency = 0;
                 BorderSizePixel = 0;
-                Position = udim2(0, 0, 0, 25);
+                Position = udim2(0, 0, 0, 20);
                 Size = udim2(1, 0, 1, 0);
                 Parent = tab_button;
             });
@@ -3122,7 +3122,6 @@ function UI:Menu(tab)
         end;
     end});
 end;
-
 
 
 return UI, framework, fonts
