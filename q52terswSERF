@@ -3123,5 +3123,30 @@ function UI:Menu(tab)
     end});
 end;
 
+local loops = {
+    watermark = { e = 0, time = 1.33; },
+};
+framework.modules.signals.connection(run_service["RenderStepped"], function(dt)
+    local time = tick();
+
+    do -- watermark
+        if (flags["show watermark"] and (time - loops.watermark.e >= loops.watermark.time)) then
+            loops.watermark.e = time;
+            local selected_theme, accent_color = UI:GetSelectedThemeAndAccent();
+            local accent = string.format("#%02X%02X%02X", accent_color.R * 255, accent_color.G * 255, accent_color.B * 255);
+            local avg_fps = fps:GetValue();
+            local avg_ping = math.floor(ping:GetValue());
+            local display_game = "project delta";
+            local user_type = "Public"
+    
+            watermark:update_text(string.format(
+                'Medusa | Ping: <font color="%s">%d</font> | Fps: <font color="%s">%d</font> | Game: <font color="%s">%s</font> | User: <font color="%s">%s</font>', 
+                accent, avg_ping, accent, avg_fps, accent, display_game, accent, user_type
+            ));
+        end;
+    end;
+
+end);
+
 
 return UI, framework, fonts
