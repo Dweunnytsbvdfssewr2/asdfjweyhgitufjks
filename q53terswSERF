@@ -941,7 +941,7 @@ do -- menu
                 BorderColor3 = color3_rgb(0, 0, 0);
                 BorderSizePixel = 0;
                 Size = udim2(0, 45, 0, 45);
-                Position = udim2(0.1, -58. 0, 23);
+                Position = udim2(0.1, -58, 0, 23);
                 Image = window.icon;
                 Parent = background;
             });
