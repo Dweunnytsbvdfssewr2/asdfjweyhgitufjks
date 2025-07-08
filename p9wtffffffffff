@@ -2465,7 +2465,7 @@ getgenv().loaded = true
             end 
     
     getgenv().library = library
-    return library
+    return library, notifications
     -- 
 -- 
 
