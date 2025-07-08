@@ -2481,6 +2481,5 @@ getgenv().loaded = true
         -- 
     -- 
 -- 
-
-return library
+return {library}
 
