@@ -536,7 +536,7 @@ getgenv().loaded = true
 
             library.gui = library:create("ScreenGui", {
                 Parent = coregui,
-                Name = "\0",
+                Name = "p9nyiga",
                 Enabled = true,
                 ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
                 IgnoreGuiInset = true,
