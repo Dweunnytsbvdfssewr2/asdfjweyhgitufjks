@@ -2464,8 +2464,9 @@ getgenv().loaded = true
                 return setmetatable(cfg, library)
             end 
     
-    getgenv().library = library
-return library, library.notifications
+	library.notifications = notifications
+	getgenv().library = library
+	return library
     -- 
 -- 
 
