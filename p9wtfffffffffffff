@@ -1951,10 +1951,7 @@ getgenv().loaded = true
                         colorpicker_element_color.BackgroundColor3 = Color
                         colorpicker_color.BackgroundColor3 = Color3.fromHSV(h, 1, 1)
                         
-                        flags[cfg.flag] = {
-                            Color = Color;
-                            Transparency = a 
-                        }
+                        flags[cfg.flag] = Color
                         
                         local color = colorpicker_element_color.BackgroundColor3
                         textbox.Text = string.format("%s, %s, %s, ", library:round(color.R * 255), library:round(color.G * 255), library:round(color.B * 255))
