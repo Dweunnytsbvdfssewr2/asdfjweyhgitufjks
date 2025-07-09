@@ -55,33 +55,6 @@ local get_mouse = lplr:GetMouse();
 Instance_manager = framework.modules.instance_manager
 signals = framework.modules.signals
 -- fonts
-local create_font = loadstring(game:HttpGet("https://raw.githubusercontent.com/judghementday2/bypass/refs/heads/main/fonts.lua"))();
-local fonts = {
-    smallest_pixel = create_font:register("medusa/menu/fonts", {
-        name = "smallest pixel",
-        weight = "regular",
-        style = "normal",
-        link = "https://raw.githubusercontent.com/judghementday2/bypass/refs/heads/main/smallest_pixel-7.ttf",
-    }),
-    templeos = create_font:register("medusa/menu/fonts", {
-        name = "templeos",
-        weight = "regular",
-        style = "normal",
-        link = "https://raw.githubusercontent.com/judghementday2/bypass/refs/heads/main/Templeos.ttf",
-    }),
-    proggytiny = create_font:register("medusa/menu/fonts", {
-        name = "proggytiny",
-        weight = "regular",
-        style = "normal",
-        link = "https://raw.githubusercontent.com/judghementday2/bypass/refs/heads/main/ProggyTiny.ttf",
-    }),
-    medodica = create_font:register("medusa/menu/fonts", {
-        name = "medodica",
-        weight = "regular",
-        style = "normal",
-        link = "https://raw.githubusercontent.com/judghementday2/bypass/refs/heads/main/MedodicaRegular.ttf",
-    }),
-};
 --
 local UI = ({
     autoload = true,
@@ -3106,21 +3079,6 @@ function UI:Menu(tab)
     tab:slider({name = "Horizontal", min = 0, max = 100, default = 10, decimals = 1, suffix = "px", flag = "watermark_x", callback = function(state) watermark:Position(state / 100, nil) end});
     tab:slider({name = "Vertical", min = 0, max = 100, default = 5, decimals = 1, suffix = "px", flag = "watermark_y", callback = function(state) watermark:Position(nil, state / 100) end});
     tab:toggle({name = "Keybinds", description = "Shows Keybinds", default = true, flag = "show keybinds", callback = function(state) UI.keybind_list:SetVisible(state) end});
-    tab:dropdown({name = "Menu Font", description = "Custom fonts for Menu", options = {"Proggy", "Templeos", "Pixel", "Rubik",}, default = "Rubik", flag = "Menu Fonts", callback = function(state)
-        local fonts = {
-            ["Proggy"] = {fonts.proggytiny, 9},
-            ["Templeos"] = {fonts.templeos, 6},
-            ["Pixel"] = {fonts.smallest_pixel, 9},
-            Rubik = {Font.new([[rbxassetid://12187365977]], Enum.FontWeight.SemiBold, Enum.FontStyle.Normal), 12},
-        };
-        for _, v in ipairs({UI.menu_gui, UI.watermark_gui, UI.keybind_screen_gui}) do
-            for _, obj in ipairs(v:GetDescendants()) do
-                if obj:IsA("TextLabel") or obj:IsA("TextButton") or obj:IsA("TextBox") then
-                    obj.FontFace, obj.TextSize = table.unpack(fonts[state]);
-                end;
-            end;
-        end;
-    end});
 end;
 
 local loops = {
@@ -3149,4 +3107,4 @@ framework.modules.signals.connection(run_service["RenderStepped"], function(dt)
 end);
 
 
-return UI, framework, fonts
+return UI, framework
