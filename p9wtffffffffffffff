@@ -890,6 +890,253 @@ getgenv().loaded = true
 	fpsLabel.Text = "FPS: " .. tostring(math.floor(realFPS))
         ]]
 
+        function library:map(properties)
+            local cfg = {
+                name = properties.name or properties.Name or "Map",
+                color = self.color
+            }
+
+            local container = library:create("Frame", {
+                Parent = self.page,
+                Size = UDim2.new(1, 0, 1, 0),
+                BackgroundTransparency = 0,
+                BackgroundColor3 = rgb(255, 255, 255),
+                BorderSizePixel = 0,
+                ClipsDescendants = true,
+                LayoutOrder = -1
+            })
+
+            library.gradient = library:create("UIGradient", {
+                Color = rgbseq{
+                    rgbkey(0, themes.preset["1"]), 
+                    rgbkey(0.5, themes.preset["2"]),
+                    rgbkey(1, themes.preset["3"]),
+                },
+                Parent = container
+            })
+
+            local scroll = library:create("ScrollingFrame", {
+                Parent = container,
+                Size = UDim2.new(1, 0, 1, 0),
+                BackgroundTransparency = 1,
+                BorderSizePixel = 0,
+                ScrollBarThickness = 0,  
+                CanvasSize = UDim2.new(0, 0, 0, 0), 
+                Active = true,
+                ClipsDescendants = true
+            })
+
+            library.gradient = library:create("UIGradient", {
+                Color = rgbseq{
+                    rgbkey(0, themes.preset["1"]), 
+                    rgbkey(0.5, themes.preset["2"]),
+                    rgbkey(1, themes.preset["3"]),
+                },
+                Parent = scroll
+            })
+
+            local originalMap = game.Players.LocalPlayer.PlayerGui.MainGui.MainFrame.MapFrame.MainFrame.Maps:FindFirstChild("EstonianBorderMap")
+            if not originalMap then
+                warn("Map not found")
+                return
+            end
+
+            local mapClone = originalMap:Clone()
+            mapClone.Parent = scroll
+            mapClone.Position = UDim2.new(0, 0, 0, 0)
+            mapClone.BackgroundTransparency = 1
+            mapClone.AnchorPoint = Vector2.new(0, 0)
+            if mapClone:IsA("Frame") or mapClone:IsA("ImageLabel") then
+                mapClone.SizeConstraint = Enum.SizeConstraint.RelativeXY
+            end
+
+            local originalMapSize = originalMap.AbsoluteSize
+            if originalMapSize.X == 0 or originalMapSize.Y == 0 then
+                originalMapSize = Vector2.new(1024, 1024) 
+            end
+
+            cfg.zoom = 1
+            cfg.minZoom = 1
+            cfg.maxZoom = 5
+
+            local function updateMapSize(zoom)
+                local sizePixels = originalMapSize * zoom
+                mapClone.Size = UDim2.new(0, sizePixels.X, 0, sizePixels.Y)
+                scroll.CanvasSize = UDim2.new(0, sizePixels.X, 0, sizePixels.Y)
+            end
+            updateMapSize(cfg.zoom)
+
+            cfg.map = mapClone
+            cfg.scroll = scroll
+
+            local title = library:create("TextLabel", {
+                Parent = container,
+                Text = cfg.name,
+                FontFace = fonts["TahomaBold"],
+                TextColor3 = rgb(255, 255, 255),
+                BackgroundTransparency = 1,
+                BorderSizePixel = 0,
+                TextXAlignment = Enum.TextXAlignment.Left,
+                Size = UDim2.new(1, -8, 0, 16),
+                Position = UDim2.new(0, 4, 0, 2),
+                TextSize = 12
+            })
+
+            local uis = game:GetService("UserInputService")
+            local dragging = false
+            local lastMousePos = Vector2.zero
+
+            scroll.InputBegan:Connect(function(input)
+                if input.UserInputType == Enum.UserInputType.MouseButton2 then
+                    dragging = true
+                    lastMousePos = uis:GetMouseLocation()
+
+                    input.Changed:Connect(function()
+                        if input.UserInputState == Enum.UserInputState.End then
+                            dragging = false
+                        end
+                    end)
+                end
+            end)
+
+            uis.InputChanged:Connect(function(input)
+                if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+                    local newMousePos = uis:GetMouseLocation()
+                    local delta = newMousePos - lastMousePos
+                    lastMousePos = newMousePos
+                    scroll.CanvasPosition = scroll.CanvasPosition - delta
+                end
+            end)
+
+            scroll.InputChanged:Connect(function(input)
+            if input.UserInputType == Enum.UserInputType.MouseWheel then
+                local mousePos = uis:GetMouseLocation()
+                local absPos = scroll.AbsolutePosition
+                local absSize = scroll.AbsoluteSize
+
+                if absSize.X == 0 or absSize.Y == 0 then return end
+
+                -- Mouse position relative to scroll frame, clamped inside
+                local relX = math.clamp(mousePos.X - absPos.X, 0, absSize.X)
+                local relY = math.clamp(mousePos.Y - absPos.Y, 0, absSize.Y)
+
+                local mouseRatio = Vector2.new(relX / absSize.X, relY / absSize.Y)
+
+                local canvasSize = Vector2.new(scroll.CanvasSize.X.Offset, scroll.CanvasSize.Y.Offset)
+                local canvasPos = scroll.CanvasPosition
+
+                -- Point on canvas under mouse before zoom
+                local mouseCanvasPos = canvasPos + Vector2.new(canvasSize.X * mouseRatio.X, canvasSize.Y * mouseRatio.Y)
+
+                -- Calculate new zoom
+                local deltaZoom = input.Position.Z * 0.05
+                local newZoom = math.clamp(cfg.zoom + deltaZoom, cfg.minZoom, cfg.maxZoom)
+
+                -- Calculate new canvas size and map size
+                local newCanvasSize = originalMapSize * newZoom
+                mapClone.Size = UDim2.new(0, newCanvasSize.X, 0, newCanvasSize.Y)
+                scroll.CanvasSize = UDim2.new(0, newCanvasSize.X, 0, newCanvasSize.Y)
+
+                -- New position on canvas for mouse point after zoom
+                local newMouseCanvasPos = Vector2.new(newCanvasSize.X * mouseRatio.X, newCanvasSize.Y * mouseRatio.Y)
+
+                -- Adjust canvas position so the canvas point under mouse stays consistent
+                local newCanvasPos = mouseCanvasPos - newMouseCanvasPos
+
+                -- Clamp canvas position within valid scroll bounds
+                local maxCanvasPosX = math.max(newCanvasSize.X - absSize.X, 0)
+                local maxCanvasPosY = math.max(newCanvasSize.Y - absSize.Y, 0)
+
+                newCanvasPos = Vector2.new(
+                    math.clamp(newCanvasPos.X, 0, maxCanvasPosX),
+                    math.clamp(newCanvasPos.Y, 0, maxCanvasPosY)
+                )
+
+                scroll.CanvasPosition = newCanvasPos
+                cfg.zoom = newZoom
+            end
+        end)
+
+
+            local markersContainer = Instance.new("Folder")
+            markersContainer.Name = "Markers"
+            markersContainer.Parent = mapClone
+
+            local espmapmarkers = {}
+            local localPlayer = game.Players.LocalPlayer
+
+            local selfMarker = localPlayer.PlayerGui.MainGui.MainFrame.MapFrame.MainFrame.MarkerDotTemplate:Clone()
+            selfMarker.Name = "SelfMarker"
+            selfMarker.Visible = true
+            selfMarker.Parent = markersContainer
+            selfMarker.TextLabel.Visible = true
+            espmapmarkers[localPlayer.Name] = {
+                playerRef = localPlayer,
+                markerRef = selfMarker,
+            }
+
+            for _, player in ipairs(game.Players:GetPlayers()) do
+                if player ~= localPlayer and player.Team == localPlayer.Team then
+                    local plrMarker = localPlayer.PlayerGui.MainGui.MainFrame.MapFrame.MainFrame.MarkerDotTemplate:Clone()
+                    plrMarker.ImageColor3 = Color3.fromRGB(227, 36, 36)
+                    plrMarker.Name = "TeamMarker_" .. player.Name
+                    plrMarker.Visible = true
+                    plrMarker.TextLabel.Text = player.Name
+                    plrMarker.TextLabel.Visible = true
+                    plrMarker.TextLabel.Size = UDim2.fromScale(2, 0.5)
+                    plrMarker.TextLabel.Position = UDim2.fromScale(-0.5, 0)
+                    plrMarker.Parent = markersContainer
+                    espmapmarkers[player.Name] = {
+                        playerRef = player,
+                        markerRef = plrMarker,
+                    }
+                end
+            end
+
+            task.spawn(function()
+                while task.wait(0.1) do
+                    if not markersContainer.Parent then break end
+                    for playerName, markerData in pairs(espmapmarkers) do
+                        local marker = markerData.markerRef
+                        local playerRef = markerData.playerRef
+
+                        if marker and playerRef and playerRef.Character then
+                            local uac = game.ReplicatedStorage.Players:FindFirstChild(playerRef.Name)
+                            if uac and uac.Status and uac.Status.UAC then
+                                local chpos = uac.Status.UAC:GetAttribute("LastVerifiedPos")
+                                if chpos then
+                                    local mapSizeReal = mapClone:GetAttribute("SizeReal") or 1
+                                    local xPos = (chpos.X - 208) / mapSizeReal
+                                    local zPos = (chpos.Z + 203) / mapSizeReal
+
+                                    marker.Position = UDim2.new(0.5 + xPos, 0, 0.5 + zPos, 0)
+                                    marker.Visible = true
+
+                                    if playerRef ~= localPlayer then
+                                        local aimFRIENDLIST = {}
+                                        if table.find(aimFRIENDLIST, playerRef.Name) then
+                                            marker.ImageColor3 = Color3.fromRGB(102, 245, 66)
+                                        else
+                                            marker.ImageColor3 = Color3.fromRGB(227, 36, 36)
+                                        end
+                                    end
+                                else
+                                    marker.Visible = false
+                                end
+                            else
+                                marker.Visible = false
+                            end
+                        elseif marker then
+                            marker.Visible = false
+                        end
+                    end
+                end
+            end)
+
+            cfg.markers = markersContainer
+            return setmetatable(cfg, library)
+        end
+
         function library:column(properties)
             self.count += 1
 
@@ -2461,9 +2708,30 @@ getgenv().loaded = true
                 return setmetatable(cfg, library)
             end 
     
+
+    -- local ui = {} do 
+    --     ui.window = library:window({name = 'priv9.net | project delta', size = UDim2.new(0, 823, 0, 580)})
+    --     ui.watermark = library:watermark({name = "priv9.net | project delta | fps: 9999 | ping: 9999"})
+
+    --     ui.tabs = {} do 
+    --         ui.tabs.legit = ui.window:tab({name = 'legit'})
+    --         ui.tabs.rage = ui.window:tab({name = 'rage'})
+    --         ui.tabs.visuals = ui.window:tab({name = 'visuals'})
+    --         ui.tabs.world = ui.window:tab({name = 'world'})
+    --         ui.tabs.misc = ui.window:tab({name = 'misc'})
+    --         ui.tabs.settings = ui.window:tab({name = 'settings'})
+    --         ui.tabs.map = ui.window:tab({name = "map"})
+    --     end
+
+    -- ui.tabs.map:map{
+    --     name = "Estonian Border | scroll to zoom | right click to drag"
+    -- }
+
+    -- end
+
+
 	library.notifications = notifications
 	getgenv().library = library
 	return library
     -- 
 -- 
-
