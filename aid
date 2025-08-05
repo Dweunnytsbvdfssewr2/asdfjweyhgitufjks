@@ -1632,6 +1632,13 @@
 					image = "rbxassetid://115194686863276",
 				})
 
+				local watermark = library:watermark({default = os.date('aidswa.re | beta | %b %d %Y - %H:%M:%S')})  
+
+				task.spawn(function()
+					while task.wait(1) do 
+						watermark.change_text(os.date('aidswa.re | beta | %b %d %Y - %H:%M:%S'))
+					end 
+				end) 
 
 				local items = style.items
 
